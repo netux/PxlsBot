@@ -1,6 +1,7 @@
 import * as Discord from 'discord.js';
 
 import { Client } from './client';
+import { MaybePromise } from './utils';
 
 interface CommandData {
   id: string;
@@ -24,7 +25,7 @@ export class Command implements CommandData {
   readonly permissions?: number;
 
   // eslint-disable-next-line no-use-before-define
-  execute: (context: Context) => Promise<void> | void;
+  execute: (context: Context) => MaybePromise<void>;
 
   constructor(data: CommandData) {
     this.id = data.id;

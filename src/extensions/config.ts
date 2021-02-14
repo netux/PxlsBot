@@ -5,7 +5,7 @@ import { Client } from '../client';
 import * as database from '../database';
 import { Command, Context } from '../command';
 import * as logger from '../logger';
-import { Color, findGuildChannel } from '../utils';
+import { Color, findGuildChannel, MaybePromise } from '../utils';
 import * as config from '../config';
 
 import { insertAuditLog } from './auditlog';
@@ -13,9 +13,9 @@ import { insertAuditLog } from './auditlog';
 export type ConfigValueDefinition<DBObjectType, JSObjectType> = {
   dbType: string,
   default?: JSObjectType,
-  stringToDatabase: (guild: Discord.Guild, value: string) => DBObjectType | Promise<DBObjectType>,
-  databaseToObject: (guild: Discord.Guild, value: DBObjectType) => JSObjectType | Promise<JSObjectType>,
-  objectToString?: (value: JSObjectType) => string | Promise<string>
+  stringToDatabase: (guild: Discord.Guild, value: string) => MaybePromise<DBObjectType>,
+  databaseToObject: (guild: Discord.Guild, value: DBObjectType) => MaybePromise<JSObjectType>,
+  objectToString?: (value: JSObjectType) => MaybePromise<string>
 }
 
 const columns = {

@@ -3,13 +3,13 @@ import * as Discord from 'discord.js';
 import { Command, Context } from './command';
 import * as logger from './logger';
 import * as config from './config';
-import { readOnlyViewOf, splitN } from './utils';
+import { MaybePromise, readOnlyViewOf, splitN } from './utils';
 
 export type ExtensionFile = {
   // eslint-disable-next-line no-use-before-define
-  setup(bot: Client): Promise<void> | void
+  setup(bot: Client): MaybePromise<void>
   // eslint-disable-next-line no-use-before-define
-  teardown?(bot: Client): Promise<void> | void
+  teardown?(bot: Client): MaybePromise<void>
 }
 
 export abstract class PrefixHandler {
@@ -42,7 +42,7 @@ export class Client extends Discord.Client {
    * @returns the index at which the prefix ends,
    * or -1 if no prefix was found.
    */
-  getCommandPrefixOffset(message: Discord.Message): Promise<number> | number {
+  getCommandPrefixOffset(message: Discord.Message): MaybePromise<number> {
     const prefix = config.get('prefix', '!');
     const start = message.content.indexOf(prefix);
     return start !== 0 ? -1 : start + prefix.length;

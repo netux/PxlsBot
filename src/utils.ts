@@ -1,6 +1,11 @@
 import * as Discord from 'discord.js';
 
 /**
+ * Equivalent to T | Promise<T>
+ */
+export type MaybePromise<T> = T | Promise<T>;
+
+/**
  * Clamps the specified number between min and max.
  * @param x The number to clamp.
  * @param min The minimum value.
